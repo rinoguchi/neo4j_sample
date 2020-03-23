@@ -68,7 +68,7 @@ class Neo4jClient:
     def __init__(
             self,
             uri: str = 'bolt://localhost:7687',
-            auth: Tuple[str, str] = ('neo4j', 'admin'),
+            auth: Tuple[str, str] = ('neo4j', 'password'),
             readonly: bool = True,
             with_transaction: bool = True):
         self.driver = GraphDatabase.driver(uri, auth=auth, encrypted=False)
