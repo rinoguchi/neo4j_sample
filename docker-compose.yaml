@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - "7474:7474" # 管理画面用
+      - "7687:7687" # bolt用
+    volumes:
+      - ${HOME}/neo4j/data:/data
+      - ${HOME}/neo4j/logs:/logs
+      - ${HOME}/neo4j/conf:/conf
+      - ${HOME}/neo4j/plugins:/plugins
+      - ./import:/import
+      - ./script:/script
+      
+    environment:
+      - NEO4J_AUTH=neo4j/password
+      - EXTENSION_SCRIPT=/script/import_csv.sh
+      - NEO4J_dbms_memory_heap_max__size=4G
+      - NEO4J_dbms_memory_heap_initial__size=4G
+      - NEO4J_dbms_memory_pagecache_size=454900k
+      - NEO4J_dbms_tx__state_max__off__heap__memory=2G
+      - NEO4JLABS_PLUGINS=["apoc"]
+      - NEO4J_apoc_import_file_use__neo4j__config=true
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_export_file_enabled=true
